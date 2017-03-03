@@ -40,7 +40,7 @@ class Dashboard extends Component {
     render() {
         const style = {
             height: 100,
-            width: 300,
+            width: 400,
             margin: 20,
             textAlign: 'center',
             display: 'inline-block',
@@ -53,10 +53,10 @@ class Dashboard extends Component {
             <div>
                 <div>
                     <mat.Paper style={style} zDepth={3} >
-                        <h3 onClick={this.donateBlood}>I want to Donate Blood.</h3>
+                    <Link to="/addReport" style={customAnchor}><h3>I want to file an Incident.</h3></Link>
                     </mat.Paper>
                     <mat.Paper style={style} zDepth={3} >
-                        <Link to="/requiredblood" style={customAnchor}><h3>I Required Blood.</h3></Link>
+                        <Link to="/myIncidents" style={customAnchor}><h3>I Want to Review My Complains.</h3></Link>
                     </mat.Paper>
                 </div>
             </div>

@@ -17,6 +17,31 @@ const actionTypes = {
   logOutRequestFailed: 'logOutRequestFailed',
   logOutRequestSuccess: 'logOutRequestSuccess',
 
+  addedReportRequestSuccess: 'addedReportRequestSuccess',
+
+  addReportRequest: 'addReportRequest',
+  addReportRequestFailed: 'addReportRequestFailed',
+  addReportRequestSuccess: 'addReportRequestSuccess',
+
+  updateReportRequest: 'updateReportRequest',
+  updateReportRequestFailed: 'updateReportRequestFailed',
+  updateReportRequestSuccess: 'updateReportRequestSuccess',
+
+  loadCrimesRequest: 'loadCrimesRequest',
+  loadCrimesRequestFailed: 'loadCrimesRequestFailed',
+  loadCrimesRequestSuccess: 'loadCrimesRequestSuccess',
+
+  loadMyIncidentsRequest: 'loadMyIncidentsRequest',
+  loadMyIncidentsRequestFailed: 'loadMyIncidentsRequestFailed',
+  loadMyIncidentsRequestSuccess: 'loadMyIncidentsRequestSuccess',
+
+
+  viewAllCrimesRequest: 'viewAllCrimesRequest',
+  viewAllCrimesRequestFailed: 'viewAllCrimesRequestFailed',
+  viewAllCrimesRequestSuccess: 'viewAllCrimesRequestSuccess',
+
+
+
   donateBloodRequest: 'donateBloodRequest',
   donateBloodRequestFailed: 'donateBloodRequestFailed',
   donateBloodRequestSuccess: 'donateBloodRequestSuccess',

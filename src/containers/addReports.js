@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
-import Login from '../components/login/login';
+import AddReports from '../components/reports/addReports';
 import { loadInitialState } from '../store/actions/loadInitialState';
-import { loginRequest } from '../store/actions/login';
+import { addReportRequest } from '../store/actions/addReportRequest';
+import { loadUserRequest } from '../store/actions/loadUserData';
 import { childAddedHandler } from '../store/actions/childAddedHandler';
 
 function mapStateToProps(state) {
@@ -12,13 +13,15 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
+  childAddedHandler(dispatch);
   //Those will be the actions we will be Triggerening from Components
   return {
     loadInitialState    : () => dispatch(loadInitialState()),
-    loginRequest        : (userData) => dispatch(loginRequest(userData))
+    loadUserRequest     : () => dispatch(loadUserRequest()),
+    addNewReports          : (reportData) => dispatch(addReportRequest(reportData))
   };
 }
 
-const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
+const AddReportContainer = connect(mapStateToProps, mapDispatchToProps)(AddReports);
 
-export default LoginContainer;
+export default AddReportContainer;

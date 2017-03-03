@@ -12,9 +12,9 @@ export function SignUpRequest(SignUpData) {
                 userRef.set({
                     uid : data.uid,
                     email: data.email,
-                    name: SignUpData.name, gender: SignUpData.gender == 1 ? "Male" : "Female", address: SignUpData.address, bloodType: SignUpData.bloodType, cellNumber: SignUpData.cellNumber
+                    name: SignUpData.name, gender: SignUpData.gender == 1 ? "Male" : "Female", address: SignUpData.address, cityname: SignUpData.cityname, cellNumber: SignUpData.cellNumber
                 }, signUpSuccessData => {
-                    dispatch(SignUpRequestSuccess({ uid: data.uid, userEmail: data.email, name: SignUpData.name, gender: SignUpData.gender == 1 ? "Male" : "Female", address: SignUpData.address, bloodType: SignUpData.bloodType, cellNumber: SignUpData.cellNumber }));
+                    dispatch(SignUpRequestSuccess({ uid: data.uid, userEmail: data.email, name: SignUpData.name, gender: SignUpData.gender == 1 ? "Male" : "Female", address: SignUpData.address, cityname: SignUpData.cityname, cellNumber: SignUpData.cellNumber }));
                 });
             })
             .catch((error) => {

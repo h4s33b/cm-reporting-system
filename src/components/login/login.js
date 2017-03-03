@@ -52,9 +52,21 @@ class Login extends Component {
     }
 
     render() {
+        const customAnchor = {
+            textDecoration: 'none',
+            color: '#fff'
+        }
+        const centerAlign = {
+            textAlign: 'center'
+        }
         const { application } = this.props.application;
         return (
             <div className="main-login-div">
+                <mat.Card style={centerAlign}>
+                    <mat.CardText>
+                    <Link to="/viewCrimes" style={customAnchor}><mat.RaisedButton type="button" label="View Incidents Anonymously" primary={true} /></Link>
+                    </mat.CardText>
+                </mat.Card>
                 <mat.Card>
                     <mat.CardTitle title="Login" />
                     <mat.CardText>

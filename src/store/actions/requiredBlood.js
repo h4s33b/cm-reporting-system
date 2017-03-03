@@ -1,6 +1,5 @@
 import ActionTypes from './actionTypes';
 import * as fbConfigs from '../../configs/dbconfigs';
-import { Observable } from "rxjs";
 
 export function requiredBloodRequest(requiredBloodData) {
     return dispatch => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './signup.css';
 import * as mat from 'material-ui';
+import './logo.css';
+
 import {
     browserHistory,
     Router,
@@ -10,8 +11,9 @@ import {
     IndexLink
 } from 'react-router';
 
-class SignUp extends Component {
-    citiesGroup;
+class AddReports extends Component {
+
+        citiesGroup;
     constructor(props) {
         super(props);
         this.citiesGroup = [
@@ -26,38 +28,49 @@ class SignUp extends Component {
             "Hartford",
             "Washington"
         ]
-        this.state = { email: '', password: '', name: '', gender: 1, address: '', cityname: "Washington" };
+        this.state = { name: '', gender:1, inicidentType: 1, address: '', cityname: "Washington", incidentDate: new Date(), incidentTime: new Date() };
         this.handleSubmit = this.handleLoginSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
 
     componentDidMount() {
-        this.props.loadInitialState();
+        this.props.loadUserRequest();
     }
 
     componentWillReceiveProps() {
         setTimeout(() => {
-            if (this.props.application && this.props.application.user) {
-                browserHistory.push('/dashboard');
+            if (!this.props.application || !this.props.application.user) {
+                browserHistory.push('/login');
             }
         }, 5)
     }
 
     handleCityTypeChange = (event, index, value) => this.setState({ cityname: value });
+    handleInicidentTypeTypeChange = (event, index, value) => this.setState({ inicidentType: value });
     handleGenderTypeChange = (event, index, value) => this.setState({ gender: value });
 
     handleLoginSubmit(evt) {
         evt.preventDefault();
-        var email = this.refs.email.getValue();
-        var password = this.refs.password.getValue();
-        var name = this.refs.name.getValue();
-        var gender = this.state.gender;
+        var affectedName = this.refs.affectedName.getValue();
+        var inicidentType = this.state.inicidentType;
         var address = this.refs.address.getValue();
         var cityname = this.state.cityname;
-        var cellNumber = this.refs.cellNumber.getValue();
-        var userObj = { email: email, password: password, name: name, gender: gender, address: address, cityname: cityname, cellNumber: cellNumber, isDonor : false };
-        this.props.signUpRequest(userObj);
+        var incidentDate = this.state.incidentDate.getTime();
+        var incidentTime = this.state.incidentTime.getTime();
+        var gender = this.state.gender?"Male":"Female";
+        var objectToSave = {
+            uid : this.props.application.user.uid,
+            userEmail : this.props.application.user.email,
+            address : address,
+            affectedName : affectedName,
+            inicidentType : inicidentType,
+            cityname : cityname,
+            gender : gender,
+            incidentDate : incidentDate,
+            incidentTime : incidentTime
+        }
+        this.props.addNewReports(objectToSave);
     }
 
     handleInputChange(event) {
@@ -70,55 +83,33 @@ class SignUp extends Component {
         });
     }
 
+    handleDateChange = (event, date) => {
+    this.setState({
+      incidentDate: date,
+    });
+    console.log(date);
+  };
+
+  handleChangeTimePicker12 = (event, date) => {
+    this.setState({incidentTime: date});
+  };
+
+
     render() {
-        const { application } = this.props.application;
         return (
             <div className="main-login-div">
                 <mat.Card>
-                    <mat.CardTitle title="Sign Up" />
+                    <mat.CardTitle title="Add New Report / Complain" />
                     <mat.CardText>
-                        <p>Already Have account? <Link to="/login">Login</Link></p>
                         <form onSubmit={this.handleSubmit} onChange={this.clearErrors}>
-                            <h3>Account Info</h3>
-                            <mat.Divider />
-                            <mat.TextField
-                                hintText="test@test.com"
-                                floatingLabelText="Email"
-                                className="full-width-container"
-                                ref="email"
-                                name="email"
-                                required={true}
-                                type="email"
-                                onChange={this.handleInputChange}
-                                /><br />
-                            <mat.TextField
-                                hintText="password"
-                                ref="password"
-                                name="password"
-                                required={true}
-                                type="password"
-                                className="full-width-container"
-                                onChange={this.handleInputChange}
-                                floatingLabelText="Password" />
-                            <br />
                             <h3>Personal Info</h3>
                             <mat.Divider />
                             <mat.TextField
                                 hintText="John Doe"
-                                floatingLabelText="Name"
+                                floatingLabelText="Affected Person Name"
                                 className="full-width-container"
-                                ref="name"
+                                ref="affectedName"
                                 name="name"
-                                required={true}
-                                type="text"
-                                onChange={this.handleInputChange}
-                                /><br />
-                            <mat.TextField
-                                hintText="1231121234"
-                                floatingLabelText="Cell Number"
-                                className="full-width-container"
-                                ref="cellNumber"
-                                name="cellNumber"
                                 required={true}
                                 type="text"
                                 onChange={this.handleInputChange}
@@ -126,7 +117,7 @@ class SignUp extends Component {
                             <mat.SelectField
                                 ref="gender"
                                 name="gender"
-                                floatingLabelText="Gender"
+                                floatingLabelText="Affected Gender"
                                 onChange={this.handleGenderTypeChange}
                                 className="full-width-container"
                                 value={this.state.gender}
@@ -135,6 +126,21 @@ class SignUp extends Component {
                                 <mat.MenuItem value={1} primaryText="Male" />
                                 <mat.MenuItem value={2} primaryText="Female" />
                             </mat.SelectField>
+                            <mat.DatePicker
+                                ref="inicidentDate"
+                                hintText="Inicident Date"
+                                floatingLabelText="Inicident Date"
+                                value={this.state.incidentDate}
+                                onChange={this.handleDateChange}
+                            />
+                            <mat.TimePicker
+                                ref="inicidentTime"
+                                format="ampm"
+                                hintText="Inicident Time"
+                                floatingLabelText="Inicident Time"
+                                value={this.state.incidentTime}
+                                onChange={this.handleChangeTimePicker12}
+                            />
                             <mat.SelectField
                                 ref="cityname"
                                 name="cityname"
@@ -150,9 +156,23 @@ class SignUp extends Component {
                                     })
                                 }
                             </mat.SelectField>
-                            <br />
+                            <mat.SelectField
+                                ref="inicidentType"
+                                name="inicidentType"
+                                floatingLabelText="Inicident Type"
+                                onChange={this.handleInicidentTypeTypeChange}
+                                className="full-width-container"
+                                value={this.state.inicidentType}
+                                required={true}
+                                >
+                                <mat.MenuItem value={1} primaryText="Crime" />
+                                <mat.MenuItem value={2} primaryText="Missing" />
+                                <mat.MenuItem value={3} primaryText="Complain" />
+                                <mat.MenuItem value={4} primaryText="Other" />
+                            </mat.SelectField>
                             <mat.TextField
-                                hintText="MultiLine with rows: 2 and rowsMax: 4"
+                                hintText="Incident Details"
+                                floatingLabelText="Incident Details"
                                 multiLine={true}
                                 className="full-width-container"
                                 rows={3}
@@ -172,4 +192,4 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp;
+export default AddReports;
